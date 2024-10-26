@@ -1,0 +1,3 @@
+# script for listing databases;
+
+show databases;
