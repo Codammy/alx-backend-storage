@@ -9,5 +9,8 @@ from typing import List, Dict
 def list_all(mongo_collection) -> List[Dict]:
     """lists all documents in a collection"""
 
-    all_doc = mongo_collection.find().to_list()
-    return all_doc if len(all_doc) > 0 else []
+    doc_lst = []
+    all_doc = mongo_collection.find()
+    for d in all_doc:
+        doc_lst.append(d)
+    return doc_lst if len(doc_lst) > 0 else []
