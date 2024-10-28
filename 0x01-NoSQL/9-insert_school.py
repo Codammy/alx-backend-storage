@@ -7,8 +7,7 @@ from pymongo.collection import Collection
 from typing import Any, Dict
 
 
-def insert_school(mongo_collection: Collection,
-                  **kwargs: Dict[Any, Any]) -> str:
+def insert_school(mongo_collection, **kwargs):
     """inserts a new document in a collection based on kwargs"""
 
     return mongo_collection.insert_one(kwargs).inserted_id
