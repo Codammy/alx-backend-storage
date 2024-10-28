@@ -3,8 +3,6 @@
 Python function that
 inserts a new document in a collection based on kwargs
 """
-from pymongo.collection import Collection
-from typing import Any, Dict
 
 
 def insert_school(mongo_collection, **kwargs):
