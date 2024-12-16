@@ -4,6 +4,7 @@ Redis cache class in python
 """
 import redis
 import uuid
+import typing
 
 
 class Cache:
@@ -14,7 +15,7 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
-    def store(self, data: any) -> str:
+    def store(self, data: typing.Union[str, bytes, int, float]) -> str:
         """method for retrieval and storage of data"""
         r_key = str(uuid.uuid4())
         self._redis.set(r_key, data)
