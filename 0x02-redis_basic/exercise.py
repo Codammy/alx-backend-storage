@@ -5,6 +5,18 @@ Redis cache class in python
 import redis
 import uuid
 import typing
+from functools import wraps
+
+
+def count_calls(method: typing.Callable) -> typing.Callable:
+    """decorator function"""
+    @wraps(method)
+    def wrapper(*args, **kwargs):
+        """wrapper function"""
+        r = redis.Redis()
+        r.incr(method.__qualname__)
+        return method(*args, *kwargs)
+    return wrapper
 
 
 class Cache:
@@ -15,13 +27,14 @@ class Cache:
         self._redis = redis.Redis()
         self._redis.flushdb()
 
+    @count_calls
     def store(self, data: typing.Union[str, bytes, int, float]) -> str:
         """method for retrieval and storage of data"""
         r_key = str(uuid.uuid4())
         self._redis.set(r_key, data)
         return r_key
 
-    def get(self, key: str, fn: typing.Callable=None):
+    def get(self, key: str, fn: typing.Callable = None):
         """returns data corresponding to `key` in redis hashmap"""
         val = self._redis.get(key)
         if fn:
