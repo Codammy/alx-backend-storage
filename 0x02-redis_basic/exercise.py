@@ -20,3 +20,18 @@ class Cache:
         r_key = str(uuid.uuid4())
         self._redis.set(r_key, data)
         return r_key
+
+    def get(self, key: str, fn: typing.Callable):
+        """returns data corresponding to `key` in redis hashmap"""
+        val = self._redis.get(key)
+        if fn:
+            val = fn(val)
+        return val
+
+    def get_int(self, key: str) -> int:
+        """returns converted byte value to int from redis"""
+        return int(self.get(key))
+
+    def get_str(self, key: str) -> str:
+        """returns converted byte value to str from redis"""
+        return str(self.get(key))
