@@ -13,8 +13,7 @@ def count_calls(method: typing.Callable) -> typing.Callable:
     @wraps(method)
     def wrapper(*args, **kwargs):
         """wrapper function"""
-        r = redis.Redis()
-        r.incr(method.__qualname__)
+        args[0]._redis.incr(method.__qualname__)
         return method(*args, *kwargs)
     return wrapper
 
