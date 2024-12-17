@@ -21,7 +21,7 @@ class Cache:
         self._redis.set(r_key, data)
         return r_key
 
-    def get(self, key: str, fn: typing.Callable):
+    def get(self, key: str, fn=None: typing.Callable):
         """returns data corresponding to `key` in redis hashmap"""
         val = self._redis.get(key)
         if fn:
