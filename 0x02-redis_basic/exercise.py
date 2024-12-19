@@ -32,6 +32,18 @@ def call_history(method: typing.Callable) -> typing.Callable:
     return wrapper
 
 
+def replay(func: typing.Callable):
+    """displays the history of calls of a particular function"""
+    r = redis.Redis()
+    no_called = int(r.get(func.__qualname__))
+    print(f"{func.__qualname__} was called {no_called} times:")
+    inputs = r.lrange(f"{func.__qualname__}:inputs", 0, -1)
+    outputs = r.lrange(f"{func.__qualname__}:outputs", 0, -1)
+    history = zip(inputs, outputs)
+    for h in history:
+        print(f"Cache.store(*{h[0].decode('utf-8')}) -> {h[1]}")
+
+
 class Cache:
     """Redis cache memory management class"""
 
