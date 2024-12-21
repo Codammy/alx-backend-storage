@@ -20,7 +20,7 @@ def cache_count(func: typing.Callable) -> typing.Callable:
         url = args[0]
         r.incr(f"count:{{url}}")
         r.expire(url, 10)
-        return get_page(url)
+        return func(url)
     return wrapper
 
 
@@ -31,3 +31,5 @@ def get_page(url: str) -> str:
     """
     resp = requests.get(url)
     return resp.text
+
+
