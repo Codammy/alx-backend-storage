@@ -19,7 +19,7 @@ def cache_count(func: typing.Callable) -> typing.Callable:
         r = redis.Redis()
         url = args[0]
         r.incr(f"count:{{url}}")
-        r.expire(url, 10)
+        r.expire(f"count:{{url}}", 10)
         return func(url)
     return wrapper
 
@@ -31,5 +31,3 @@ def get_page(url: str) -> str:
     """
     resp = requests.get(url)
     return resp.text
-
-
