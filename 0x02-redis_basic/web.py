@@ -1,4 +1,4 @@
-#!/usr/bin/python3
+#!/usr/bin/env python3
 """ In this tasks, i will implement a
 get_page function (prototype: def get_page(url: str) -> str:).
 The core of the function is very simple.
@@ -26,5 +26,8 @@ def cache_count(func: typing.Callable) -> typing.Callable:
 
 @cache_count
 def get_page(url: str) -> str:
+    """ It uses the requests module to obtain
+    the HTML content of a particular URL and returns it.
+    """
     resp = requests.get(url)
     return resp.text
